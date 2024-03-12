@@ -1,0 +1,29 @@
+Bootstrap: docker
+From: python:3.7-bookworm
+
+%post
+    
+    # Install Cmake
+    # thanks to https://www.softwarepronto.com/2022/09/dockerubuntu-installing-latest-cmake-on.html
+    
+    #wget https://github.com/Kitware/CMake/releases/download/v3.24.1/cmake-3.24.1-Linux-x86_64.sh \
+      #-q -O /tmp/cmake-install.sh \
+      #&& chmod u+x /tmp/cmake-install.sh \
+      #&& mkdir /opt/cmake-3.24.1 \
+      #&& /tmp/cmake-install.sh --skip-license --prefix=/opt/cmake-3.24.1 \
+      #&& rm /tmp/cmake-install.sh \
+      #&& ln -s /opt/cmake-3.24.1/bin/* /usr/local/bin
+
+     # Create & activate virtualenv
+     python -m venv .venv
+     . .venv/bin/activate
+     
+     # Install deps
+     pip install -U pip
+
+     pip3 install torch torchvision torchaudio
+     pip install sb3-contrib pickle5 scipy peakutils tensorboard gmsh
+
+     
+%runscript
+    echo "Hello!"
