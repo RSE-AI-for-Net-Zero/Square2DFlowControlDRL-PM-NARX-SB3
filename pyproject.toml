@@ -1,0 +1,24 @@
+[project]
+name = "Square2DFlowControlDRL-PM-NARX-SB3"
+version = "1.0"
+description = "Code corresponding to our manuscript \"Active Flow Control for Bluff Body Drag Reduction Using Reinforcement Learning with Partial Measurements\", preprint accessible at https://arxiv.org/abs/2307.12650."
+dependencies = ["torch==2.2.2",
+		"torchvision==0.17.2",
+		"torchaudio==2.2.2",
+		"sb3-contrib==2.3.0",
+	     	"tensorboard==2.16.2",
+		"gmsh==4.12.2",
+		"scipy==1.13.0",
+		"peakutils==1.3.4",
+		"gym==0.26.2",
+		"pytest", "pytest-env", "coverage",
+		"sphinx", "click"
+		]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+
+[tool.setuptools]
+packages = ["Square2DFlowControl"]
