@@ -6,7 +6,7 @@ import socket
 import numpy as np
 import torch
 
-from simulation_base.env import resume_env, nb_actuations
+from .simulation_base.env import resume_env, nb_actuations
 
 from gym.wrappers.time_limit import TimeLimit
 
@@ -19,8 +19,9 @@ from stable_baselines3.common.callbacks import CheckpointCallback, EvalCallback
 
 
 
-if __name__ == '__main__':
-
+#if __name__ == '__main__':
+def main(number_servers, savedir):
+    '''
     ap = argparse.ArgumentParser()
     ap.add_argument("-n", "--number-servers", required=True, help="number of servers to spawn", type=int)
     ap.add_argument("-s", "--savedir", required=False,
@@ -28,11 +29,14 @@ if __name__ == '__main__':
                     default='saver_data')
 
     args = vars(ap.parse_args())
-
+    
     number_servers = args["number_servers"]
     savedir = args["savedir"]
+    '''
 
-
+    '''
+    To-do: move all config + magic numbers to own module
+    '''
     config = {}
 
     config["learning_rate"] = 1e-4
@@ -60,13 +64,17 @@ if __name__ == '__main__':
                                             save_path=savedir,
                                             name_prefix='PMTQC27FSavgPR')
 
+
     env = SubprocVecEnv([resume_env(plot=False, dump_CL=False, dump_debug=10, n_env=i) for i in range(number_servers)], start_method='spawn')
     
     # Deactivate this if not use history observations
     env = VecFrameStack(env, n_stack=27)
     
     env = VecNormalize(env, gamma=0.99)
-
+    '''
+    env = resume_env(plot=False, dump_CL=False, dump_debug=10, n_env=0)
+    '''
+    
     # Replace 'TQC' by 'SAC' if want to use SAC
     model = TQC('MlpPolicy', env, policy_kwargs=policy_kwargs, tensorboard_log=savedir, device=device, **config)
 

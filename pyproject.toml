@@ -19,6 +19,8 @@ dependencies = ["torch==2.2.2",
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
-
 [tool.setuptools]
 packages = ["Square2DFlowControl"]
+
+[project.scripts]
+square-2D-Flow-Control = "Square2DFlowControl.scripts.cli:Square2DFlowControl"

@@ -5,11 +5,11 @@ import sys
 import os
 import shutil
 import numpy as np
-cwd = os.getcwd()
-sys.path.append(cwd + "/../")
+#cwd = os.getcwd()
+#sys.path.append(cwd + "/../")
 
-from Env2DCylinderModified import Env2DCylinderModified
-from probe_positions import probe_positions
+from .. Env2DCylinderModified import _Env2DCylinderModified
+from .. probe_positions import probe_positions
 
 
 from dolfin import Expression
@@ -166,19 +166,21 @@ def resume_env(plot=False,  # To plot results (Field, controls, lift, drag, rec 
         simu_name = '_'.join([simu_name, next_param])
 
         # Pass parameters to the Environment class
-        env_2d_cylinder = Monitor(TimeLimit(Env2DCylinderModified(path_root=root,
-                                                geometry_params=geometry_params,
-                                                flow_params=flow_params,
-                                                solver_params=solver_params,
-                                                output_params=output_params,
-                                                optimization_params=optimization_params,
-                                                inspection_params=inspection_params,
-                                                n_iter_make_ready=n_iter,
-                                                verbose=verbose,
-                                                reward_function=reward_function,
-                                                number_steps_execution=number_steps_execution,
-                                                simu_name=simu_name), max_episode_steps = horizon))
-
+        environment = _Env2DCylinderModified(path_root=root,
+                                             geometry_params=geometry_params,
+                                             flow_params=flow_params,
+                                             solver_params=solver_params,
+                                             output_params=output_params,
+                                             optimization_params=optimization_params,
+                                             inspection_params=inspection_params,
+                                             n_iter_make_ready=n_iter,
+                                             verbose=verbose,
+                                             reward_function=reward_function,
+                                             number_steps_execution=number_steps_execution,
+                                             simu_name=simu_name)
+        
+        env_2d_cylinder = Monitor(TimeLimit(environment, max_episode_steps = horizon))
+        
         return env_2d_cylinder
 
 

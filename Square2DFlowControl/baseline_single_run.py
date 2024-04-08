@@ -14,7 +14,7 @@ import json
 from dolfin import Expression
 from gym.wrappers.time_limit import TimeLimit
 
-from Env2DCylinderModified import Env2DCylinderModified
+from .Env2DCylinderModified import _Env2DCylinderModified
 from probe_positions import probe_positions
 from simulation_base.env import resume_env, nb_actuations, simulation_duration
 

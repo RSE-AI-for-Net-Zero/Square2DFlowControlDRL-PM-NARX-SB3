@@ -5,14 +5,14 @@ Environment seen by the RL agent. It is the main class of the repo.
 
 import sys
 import os
-cwd = os.getcwd()
-sys.path.append(cwd + "/../Simulation/")
+#cwd = os.getcwd()
+#sys.path.append(cwd + "/../Simulation/")
 
 from dolfin import Expression, File, plot
-from probes import PenetratedDragProbeANN, PenetratedLiftProbeANN, PressureProbeANN, VelocityProbeANN, RecirculationAreaProbe
-from generate_msh import generate_mesh
-from flow_solver import FlowSolver
-from msh_convert import convert
+from .probes import PenetratedDragProbeANN, PenetratedLiftProbeANN, PressureProbeANN, VelocityProbeANN, RecirculationAreaProbe
+from .generate_msh import generate_mesh
+from .flow_solver import FlowSolver
+from .msh_convert import convert
 from dolfin import *
 from distutils.dir_util import copy_tree
 import numpy as np
@@ -33,8 +33,10 @@ import copy
 import subprocess
 import scipy.signal as sgn
 import io
-import pickle5 as pickle
+#import pickle5 as pickle
+import pickle
 
+from . import ___package__
 
 class RingBuffer():
     "A 1D ring buffer using numpy arrays"
@@ -55,7 +57,7 @@ class RingBuffer():
 
 
 # @printidc()
-class Env2DCylinderModified(gym.Env):
+class _Env2DCylinderModified(gym.Env):
     """Environment for 2D flow simulation around a cylinder."""
 
     def __init__(self, path_root, geometry_params, flow_params, solver_params, output_params,
@@ -228,7 +230,7 @@ class Env2DCylinderModified(gym.Env):
                 print("Load buffer history")
 
             # Load ring buffers
-            with open('mesh/dict_history_parameters.pkl', 'rb') as f:
+            with ___package__.joinpath('mesh/dict_history_parameters.pkl').open('rb') as f:
                 self.history_parameters = pickle.load(f)
 
             # Check everything is good to go
