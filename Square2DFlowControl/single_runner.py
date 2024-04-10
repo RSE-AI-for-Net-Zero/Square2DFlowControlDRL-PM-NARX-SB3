@@ -14,7 +14,7 @@ import json
 from dolfin import Expression
 from gym.wrappers.time_limit import TimeLimit
 
-from Env2DCylinderModified import Env2DCylinderModified
+from Env2DCylinderModified import _Env2DCylinderModified
 from probe_positions import probe_positions
 from simulation_base.env import resume_env, nb_actuations, simulation_duration
 
@@ -35,8 +35,8 @@ if(os.path.exists("saved_models/test_strategy_avg.csv")):
 if __name__ == '__main__':
 
     ## Things to modify before single run (evaluate the policy)
-    saver_restore ='Your path to the saved agent, including the file name.'
-    vecnorm_path = 'Your path to the saved normalization file, including the file name.'
+    saver_restore ='/home/leeb/single_runner_1'
+    vecnorm_path = '/home/leeb/single_runner_2'
    
     action_step_size = simulation_duration / nb_actuations  # Get action step size from the environment, not used
     horizon = 400 # Number of actions for single run. Non-dimensional time is horizon*action_step_size (by default action_step_size=0.5)

@@ -6,7 +6,8 @@ import socket
 import numpy as np
 import torch
 
-from .simulation_base.env import resume_env, nb_actuations
+from Square2DFlowControl import ___package__
+from Square2DFlowControl.simulation_base.env import resume_env, nb_actuations
 
 from gym.wrappers.time_limit import TimeLimit
 
@@ -19,9 +20,9 @@ from stable_baselines3.common.callbacks import CheckpointCallback, EvalCallback
 
 
 
-#if __name__ == '__main__':
-def main(number_servers, savedir):
-    '''
+if __name__ == '__main__':
+#def main(number_servers, savedir):
+
     ap = argparse.ArgumentParser()
     ap.add_argument("-n", "--number-servers", required=True, help="number of servers to spawn", type=int)
     ap.add_argument("-s", "--savedir", required=False,
@@ -32,7 +33,7 @@ def main(number_servers, savedir):
     
     number_servers = args["number_servers"]
     savedir = args["savedir"]
-    '''
+
 
     '''
     To-do: move all config + magic numbers to own module
@@ -54,6 +55,7 @@ def main(number_servers, savedir):
 
     config["ent_coef"] = "auto_0.01"
     config["target_entropy"] = "auto"
+    
     device = "cuda" # "cpu" if run the training on cpu
     policy_kwargs = dict(net_arch=dict(pi=[512,512,512], qf=[512,512,512]))
     checkpoint_callback = CheckpointCallback(
@@ -68,7 +70,7 @@ def main(number_servers, savedir):
     env = SubprocVecEnv([resume_env(plot=False, dump_CL=False, dump_debug=10, n_env=i) for i in range(number_servers)], start_method='spawn')
     
     # Deactivate this if not use history observations
-    env = VecFrameStack(env, n_stack=27)
+    #env = VecFrameStack(env, n_stack=27)
     
     env = VecNormalize(env, gamma=0.99)
     '''

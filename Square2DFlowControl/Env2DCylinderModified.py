@@ -9,10 +9,10 @@ import os
 #sys.path.append(cwd + "/../Simulation/")
 
 from dolfin import Expression, File, plot
-from .probes import PenetratedDragProbeANN, PenetratedLiftProbeANN, PressureProbeANN, VelocityProbeANN, RecirculationAreaProbe
-from .generate_msh import generate_mesh
-from .flow_solver import FlowSolver
-from .msh_convert import convert
+from Square2DFlowControl.probes import PenetratedDragProbeANN, PenetratedLiftProbeANN, PressureProbeANN, VelocityProbeANN, RecirculationAreaProbe
+from Square2DFlowControl.generate_msh import generate_mesh
+from Square2DFlowControl.flow_solver import FlowSolver
+from Square2DFlowControl.msh_convert import convert
 from dolfin import *
 from distutils.dir_util import copy_tree
 import numpy as np
@@ -36,7 +36,7 @@ import io
 #import pickle5 as pickle
 import pickle
 
-from . import ___package__
+from Square2DFlowControl import ___package__
 
 class RingBuffer():
     "A 1D ring buffer using numpy arrays"
@@ -223,8 +223,8 @@ class _Env2DCylinderModified(gym.Env):
                 print("Load initial flow state")
 
             # Load initial fields
-            self.flow_params['u_init'] = 'mesh/u_init.xdmf'
-            self.flow_params['p_init'] = 'mesh/p_init.xdmf'
+            self.flow_params['u_init'] = os.path.join(___package__, 'mesh/u_init.xdmf')
+            self.flow_params['p_init'] = os.path.join(___package__, 'mesh/p_init.xdmf')
 
             if self.verbose > 0:
                 print("Load buffer history")

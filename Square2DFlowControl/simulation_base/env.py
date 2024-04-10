@@ -8,8 +8,8 @@ import numpy as np
 #cwd = os.getcwd()
 #sys.path.append(cwd + "/../")
 
-from .. Env2DCylinderModified import _Env2DCylinderModified
-from .. probe_positions import probe_positions
+from Square2DFlowControl.Env2DCylinderModified import _Env2DCylinderModified
+from Square2DFlowControl.probe_positions import probe_positions
 
 
 from dolfin import Expression
@@ -17,7 +17,10 @@ from gym.wrappers.time_limit import TimeLimit
 
 from stable_baselines3.common.monitor import Monitor
 
+from Square2DFlowControl import ___package__
+
 nb_actuations = 400 # Number of actions (NN actuations) taken per episode (Number of action intervals)
+simulation_duration = 200  # In non-dimensional time unit
 
 def resume_env(plot=False,  # To plot results (Field, controls, lift, drag, rec area) during training
                dump_vtu=False,  # If not False, create vtu files of area, velocity, pressure, every 'dump_vtu' steps
@@ -39,9 +42,9 @@ def resume_env(plot=False,  # To plot results (Field, controls, lift, drag, rec 
         single_output = False
         include_actions = True
 
-        root = 'mesh/turek_2d'  # Root of geometry file path
-        if (not os.path.exists('mesh')):
-            os.mkdir('mesh')
+        root = os.path.join(___package__, 'mesh/turek_2d')  # Root of geometry file path
+        if not os.path.exists(os.path.join(___package__, 'mesh')):
+            os.mkdir(os.path.join(___package__, 'mesh'))
 
         geometry_params = {'output': '.'.join([root, 'geo']),
                            # mesh/turek_2d.geo // relative output path of geometry file according to geo params

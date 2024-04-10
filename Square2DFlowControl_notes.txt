@@ -1,0 +1,34 @@
+Clean code
+
+Can we autodoc annotate python dicts?
+
+
+Parameters & magic numbers -> one or more config files?
+Paths to files -> load these in one place?
+Entry points
+
+
+Commented out lines like
+#cwd = os.getcwd()
+#sys.path.append(cwd + "/../")
+
+
+simulation_base.env:44
+ root = os.path.join(___package__, 'mesh/turek_2d')  # Root of geometry file path
+        if not os.path.exists(os.path.join(___package__, 'mesh')):
+            os.mkdir(os.path.join(___package__, 'mesh'))
+
+
+Don't put things like this in scripts - do if .. else .. from config
+    # Deactivate this if not use history observations
+    #env = VecFrameStack(env, n_stack=27)
+
+
+
+To-do:
+
+pyproject.toml
+Move config out of launch_parallel_training
+Move remaining magics in lpt into config
+Put if else around use history observations
+Put path to mesh directory in config
